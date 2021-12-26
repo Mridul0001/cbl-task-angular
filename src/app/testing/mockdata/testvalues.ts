@@ -1,0 +1,1 @@
+export const _API = "http://sometestapi.extension/"

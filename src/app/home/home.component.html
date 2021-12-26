@@ -1,0 +1,64 @@
+<!--Trying to keep html elements to minimum due to time constraint to focus more on functionality-->
+<div class="loader-container" *ngIf="isLoading"><mat-spinner></mat-spinner></div>
+<form id="product-selection-form" *ngIf="!isLoading" class="products-container" [formGroup]="productsForm" (ngSubmit)="handleSubmit()">
+    <ng-container formArrayName="products">
+        <div class="product-card" *ngFor="let productForm of builtProducts.controls; let i=index">
+            <div class="form-array-item" [formGroupName]="i">
+                <mat-card>
+                    <mat-card-header>
+                        <div mat-card-avatar class="possible-product-icon"></div>
+                        <mat-card-title>{{PRODUCTS[i].name}}</mat-card-title>
+                        <mat-card-subtitle>{{PRODUCTS[i].name}} Category</mat-card-subtitle>
+                        <button class="product-action-button" type="button" mat-icon-button *ngIf="isSeller==='seller';else addbutton" (click)="deleteProduct(i)"><mat-icon>delete</mat-icon></button>
+                        <ng-template #addbutton>
+                            <mat-slide-toggle
+                                checked="true"
+                                class="product-action-button"
+                                color="primary"
+                                (change)="productSelection(i)">
+                                    Add
+                            </mat-slide-toggle>
+                        </ng-template>
+                    </mat-card-header>
+                    <svg mat-card-image  [ngStyle]="{'background-color': productForm.value.color?productForm.value.color:defaultProductColor}">
+                        <text class="product-image-text-color" x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">{{PRODUCTS[i].name}}</text>    
+                    </svg>
+                    <mat-card-content>
+                    <p>
+                        {{PRODUCTS[i].desc}}
+                    </p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <mat-form-field>
+                            <mat-label for="color-input">Select color:</mat-label>
+                            <mat-select id="color-input" required formControlName="color">
+                                <mat-option>------</mat-option>
+                                <mat-option *ngFor="let col of PRODUCTS[i].colors" [value]="col">{{COLORMAP[col]}}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="productForm.controls.color.invalid">{{genericErrorMessage}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label for="size-input">Select size:</mat-label>
+                            <mat-select id="size-input" required formControlName="size">
+                                <mat-option>------</mat-option>
+                                <mat-option *ngFor="let size of SIZES" [value]="size" [disabled]="PRODUCTS[i].sizes[size]===0">{{size}}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="productForm.controls.size.invalid">{{genericErrorMessage}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label for="wt-input">Weight(in KGs):</mat-label>
+                            <input matInput id="wt-input" type="number" min="1" max="1000" required placeholder="Weight" formControlName="weight"/>
+                            <mat-error *ngIf="productForm.controls.weight.invalid">{{weightErrorMessage}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label for="qty-input">Quantity(1-5):</mat-label>
+                            <input matInput id="qty-input" type="number" min="1" max="5" required placeholder="Qty" formControlName="qty"/>
+                            <mat-error *ngIf="productForm.controls.qty.invalid">{{qtyErrorMessage}}</mat-error>
+                        </mat-form-field>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+    </ng-container>
+    <div *ngIf="isSeller==='buyer'" class="submit-button"><button [disabled]="disableSubmitButton" id="place-order-button" mat-raised-button color="primary" type="submit">Add selected products</button></div>
+</form>

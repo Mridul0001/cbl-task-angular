@@ -1,0 +1,24 @@
+.navbar{
+    position: relative;
+    padding: 15px;
+    -webkit-box-shadow: 0 8px 6px -6px #afafaf;
+       -moz-box-shadow: 0 8px 6px -6px #afafaf;
+            box-shadow: 0 8px 6px -6px #afafaf;
+}
+
+.nav-text{
+    margin-left: 15px;
+}
+
+.note{
+    margin-left: 5px;
+    color: red;
+}
+
+.code-coverage{
+    height: 100%;
+    position: absolute;
+    right: 0;
+    margin-right: 30px;
+    margin-top: 10px;
+}

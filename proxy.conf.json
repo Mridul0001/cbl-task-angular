@@ -1,0 +1,8 @@
+{
+  "/v1/*": {
+    "target":"https://promasy-api.herokuapp.com",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

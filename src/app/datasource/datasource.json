@@ -1,0 +1,66 @@
+[
+    {
+        "id": "61c6e69a08f59a8ba2a18f43",
+        "name": "Product 1",
+        "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "colors": [
+            "#D87CAC",
+            "#004F2D",
+            "#FFDA22"
+        ],
+        "sizes": {
+            "S": 100,
+            "XL": 9,
+            "L": 100,
+            "M": 5
+        }
+    },
+    {
+        "id": "61c6e69a08f59a8ba2a18f44",
+        "name": "Product 2",
+        "desc": "In et ex sit amet enim molestie ultrices.",
+        "colors": [
+            "#077187",
+            "#74A57F",
+            "#E4C5AF"
+        ],
+        "sizes": {
+            "S": 100,
+            "XL": 15,
+            "L": 0,
+            "M": 5
+        }
+    },
+    {
+        "id": "61c6e69a08f59a8ba2a18f45",
+        "name": "Product 3",
+        "desc": "Vestibulum sit amet orci sed purus iaculis fermentum quis a ex.",
+        "colors": [
+            "#FF220C",
+            "#74A57F",
+            "#D33E43"
+        ],
+        "sizes": {
+            "S": 100,
+            "XL": 0,
+            "L": 100,
+            "M": 5
+        }
+    },
+    {
+        "id": "61c6e69a08f59a8ba2a18f46",
+        "name": "Product 4",
+        "desc": "Donec eleifend purus in nisi posuere aliquet.",
+        "colors": [
+            "#FFBD00",
+            "#FF0054",
+            "#FF5400"
+        ],
+        "sizes": {
+            "S": 0,
+            "XL": 9,
+            "L": 100,
+            "M": 5
+        }
+    }
+]
