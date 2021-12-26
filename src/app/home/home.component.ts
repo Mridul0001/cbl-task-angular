@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { CommonService } from '../services/common.service';
 import { COLORMAP, SIZES } from '../mapping/mappings';
@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy, OnChanges {
 
   //Using 'any' type for dynamic data, although we can be specific if we know the fields beforehand
   @Input("isSeller") isSeller = '';
@@ -35,6 +35,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.PRODUCTS=this.service.getProducts();
     this.buildFormArray();
+    console.log("ng on init called");
   }
 
   ngOnDestroy(): void {
@@ -42,6 +43,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.subscription.forEach((s)=>{s.unsubscribe()})
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+      //Detect the change in isSeller property and disable all fields for seller view
+      this.isSeller === 'seller'?this.productsForm.disable():this.productsForm.enable()
+  }
   buildFormArray(){
     this.PRODUCTS.map((p:any)=>{
       const productForm = this.formBuilder.group({
