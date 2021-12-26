@@ -103,9 +103,12 @@ export class HomeComponent implements OnInit, OnDestroy, OnChanges {
      * Could add alert here to confirm deletion, but as it is just to specifically 
      * show removeAt() method so keeping it simple for now.
      * */
-
-    this.builtProducts.removeAt(i);
+    
+    this.products.removeAt(i);
     this.disableSubmitButton=this.builtProducts.length==0;
+
+    //also need to update the products list we have. There's better approaches but this would do for now
+    this.PRODUCTS.splice(i,1);
   }
 
   //passing window reload function to variable to avoid infinite reload in testing
