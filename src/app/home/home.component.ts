@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { CommonService } from '../services/common.service';
 import { COLORMAP, SIZES } from '../mapping/mappings';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +20,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   builtProducts:any;
   defaultProductColor:string = "#b6beb6";
   disableSubmitButton:boolean = false;
-  
+  subscription:Subscription[] = [];
   //Error messages could be configured specifcally as per the error, but doing this now for simplicity
   weightErrorMessage:string = "*Enter weight between 1 - 1000";
   qtyErrorMessage:string = "*Enter quantity between 1-5";
@@ -38,6 +39,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
       //will be used to perform any cleanup like unsubscribing observables (if any)
+      this.subscription.forEach((s)=>{s.unsubscribe()})
   }
 
   buildFormArray(){
@@ -74,7 +76,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.isLoading=this.productsForm.valid;
     console.log(this.productsForm);
     if(this.isLoading){
-      this.service.placeOrder({order:this.productsForm.value.products}).subscribe({
+      //Add subscription to subscriptions array so that it can be unscubsribed on component destruction
+      this.subscription.push(this.service.placeOrder({order:this.productsForm.value.products}).subscribe({
         next:(res:any)=>{
           this.isLoading=false;
           alert("Order placed successfully, check the new opened tab to confirm it is saved in database")
@@ -86,7 +89,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           console.error(err);
           this.doReload();
         }
-      })
+      }));
     }
   }
 
@@ -97,9 +100,10 @@ export class HomeComponent implements OnInit, OnDestroy {
      * */
 
     this.builtProducts.removeAt(i);
-    this.disableSubmitButton=this.builtProducts.length;
+    this.disableSubmitButton=this.builtProducts.length==0;
   }
 
+  //passing window reload function to variable to avoid infinite reload in testing
   doReload = function(){
     window.location.reload();
   }
